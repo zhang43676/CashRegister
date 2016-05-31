@@ -3,9 +3,29 @@
     public abstract class ProductBase
         /* product basic information */
     {
-        public int ProductId { get; set; }
-        public string ProductName { get; set; }
-        public double ProductPrice { get; set; }
-        public bool IsWeightable { get; set; }
+        protected int ProductId { get; set; }
+        protected string ProductName { get; set; }
+        protected double ProductPrice { get; set; }
+        protected bool IsWeightable { get; set; }
+
+        public int GetProductId()
+        {
+            return ProductId;
+        }
+
+        public string GetProductName()
+        {
+            return ProductName;
+        }
+
+        public double GetProductPrice()
+        {
+            return ProductPrice;
+        }
+
+        public bool GetIsWeightable()
+        {
+            return IsWeightable;
+        }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace CashRegister
 {
@@ -16,19 +15,19 @@ namespace CashRegister
         {
             foreach (var pair in ShoppingCart)
             {
-                var selectResult = StoreIamIn.RegularPriceProductList.Where(i => i.ProductId == pair.Key).ToList();
-                if (selectResult.Count != 0)
+                var selectResult = StoreIamIn.SearchRegularPriceProductById(pair.Key);
+                if (selectResult != null)
                 {
-                    Price = Price + selectResult[0].ProductPrice*pair.Value;
+                    Price = Price + selectResult.GetProductPrice()*pair.Value;
                 }
                 else
                 {
-                    var reSelectResult = StoreIamIn.SaleProductList.Where(i => i.ProductId == pair.Key).ToList();
-                    if (reSelectResult.Count != 0)
+                    var selectSaleResult = StoreIamIn.SearchSaleProductById(pair.Key);
+                    if (selectSaleResult != null)
                     {
-                        var discountValue = Math.Floor(pair.Value/reSelectResult[0].Theshold)*
-                                            reSelectResult[0].Discount;
-                        Price = Price + reSelectResult[0].ProductPrice*(pair.Value - discountValue);
+                        var discountValue = Math.Floor(pair.Value/selectSaleResult.GetTheshold())*
+                                            selectSaleResult.GetDiscount();
+                        Price = Price + selectSaleResult.GetProductPrice()*(pair.Value - discountValue);
                     }
                 }
             }
